@@ -69,7 +69,7 @@
         </plugins>
         <resources>
             <resource>
-                <directory>selenium-odudchenko/src/test/resources</directory>
+                <directory>src/test/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>

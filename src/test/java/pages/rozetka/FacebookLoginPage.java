@@ -77,6 +77,7 @@ public class FacebookLoginPage extends TestBase {
         if (loginButtonIsDisplayed()){
             Log4Test.info(getCurrentTimestamp() + ": sending WebElement [passwordField] click event.");
             loginButton.click();
+//            driver.switchTo().defaultContent();
         }
     }
 

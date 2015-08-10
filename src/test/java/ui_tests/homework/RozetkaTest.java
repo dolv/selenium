@@ -40,6 +40,7 @@ public class RozetkaTest extends TestBase{
         facebookLoginPage.clickLoginButton();
 
 //      Here we check if UpperRight cornerr link contains some of the provided credentials;
+        rozetkaMainPage.switchToParentWindow();
         String[] credentials = {FIRSTNAME, LASTNAME, NICKNAME};
         assertTrue(rozetkaMainPage.areRightUpperConnerCredentialsCorrect(credentials));
 
@@ -48,8 +49,9 @@ public class RozetkaTest extends TestBase{
         RozetkaPersonalInformationPage rosetkaPersonalInformationPage = new RozetkaPersonalInformationPage(driver);
         rosetkaPersonalInformationPage.waitForPageLoad();
 
+        assertTrue(rosetkaPersonalInformationPage.getCurrentURL().contains(EXPECTED_PAGE_URL));
+        assertTrue(rosetkaPersonalInformationPage.getPageHeaderText().toLowerCase().contains(EXPECTED_PAGE_HEADER.toLowerCase()));
 
-        assertTrue(rosetkaPersonalInformationPage.getPageHeaderText().toLowerCase().contains(EXPECTED_PAGE_HEADER) & rosetkaPersonalInformationPage.getCurrentURL().contains(EXPECTED_PAGE_URL));
 
     }
 

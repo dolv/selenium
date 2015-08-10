@@ -2,7 +2,6 @@ package ui_tests.lesson_7;
 
 
 import core.BrowserTypes;
-import core.WebDriverFactory;
 import utils.PropertyLoader;
 
 public class TestData {

@@ -22,9 +22,9 @@ public class TestBase {
         Log4Test.info(getCurrentTimestamp()+": Instantiating a WebDriver");
         driver = WebDriverFactory.getWebDriver(TestData.BROWSER_NAME);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(50, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(50, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
         Log4Test.info(getCurrentTimestamp() + ": WebDriver has being instantiated.");
     }
     public WebDriverWait webDriverWait(WebDriver driver){

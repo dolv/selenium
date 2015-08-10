@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class RozetkaMainPage extends TestBase {
     private final String PAGE_TITLE = "ROZETKA";
-    private final By ENTER_USER_ACCOUNT_LINK_LOCATOR = By.xpath("//span[@id='header_user_menu_parent']/a");
+    private final By ENTER_USER_ACCOUNT_LINK_LOCATOR = By.xpath("//span[@id='header_user_menu_parent']");
     private final By LOGIN_TITLE_LOCATOR = By.xpath("//div[@class='popup-css popup-auth']");
     private final By LOGIN_VK_LOCATOR = By.xpath("//div[@type='vkontakte']//a");
     private final By LOGIN_FACEBOOK_LOCATOR = By.xpath("//div[@type='facebook']//a");
@@ -25,6 +25,7 @@ public class RozetkaMainPage extends TestBase {
     private WebElement rememberMeCheckBox;
     private WebElement enterUserAccountLink;
     private WebElement userAccountLink;
+    private String mainWindowId;
 
     public RozetkaMainPage(WebDriver driver) {
         this.driver = driver;
@@ -68,7 +69,7 @@ public class RozetkaMainPage extends TestBase {
         return result;
     }
     public boolean userAccountLinkIsDisplayed(){
-        Log4Test.info(getCurrentTimestamp() + ": WebElement [userAccountLink] initialization by locator =\""+LOGIN_FACEBOOK_LOCATOR+"\"");
+        Log4Test.info(getCurrentTimestamp() + ": WebElement [userAccountLink] initialization by locator =\""+ENTER_USER_ACCOUNT_LINK_LOCATOR+"\"");
         userAccountLink=driver.findElement(ENTER_USER_ACCOUNT_LINK_LOCATOR);
         Boolean result = userAccountLink.isDisplayed();
         Log4Test.info(getCurrentTimestamp() + ": WebElement [userAccountLink] displayed =\""+ Boolean.toString(result)+"\"");
@@ -112,9 +113,8 @@ public class RozetkaMainPage extends TestBase {
         if (loginFacebookButtonIsDisplayed()) {
             Log4Test.info(getCurrentTimestamp() + ": sending WebElement [loginFacebookButton] click event.");
             loginFacebookButton.click();
-            Set<String> windowId = driver.getWindowHandles();
-            Iterator<String> itererator = windowId.iterator();
-            String mainWinID = itererator.next();
+            Iterator<String> itererator = driver.getWindowHandles().iterator();
+            mainWindowId=itererator.next();
             String  newAdwinID = itererator.next();
             driver.switchTo().window(newAdwinID);
         }
@@ -142,4 +142,10 @@ public class RozetkaMainPage extends TestBase {
         }
         return result;
     }
+
+    public void switchToParentWindow(){
+        driver.switchTo().window(mainWindowId);
+        webDriverWait(driver).until(ExpectedConditions.titleContains(PAGE_TITLE));
+    }
+
 }
