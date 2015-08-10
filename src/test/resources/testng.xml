@@ -1,0 +1,29 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1" verbose="1" >
+    <test name="isPrime" >
+        <classes>
+            <class name="ui_tests.lesson_2.isPrime" />
+        </classes>
+    </test>
+    <test name="GoogleSearchTest" >
+        <classes>
+            <class name="ui_tests.lesson_6.GoogleSearchTest" />
+        </classes>
+    </test>
+    <test name="StylusSearchIPhone6" >
+        <classes>
+            <class name="ui_tests.lesson_7.StylusSearchIPhone6"/>
+        </classes>
+    </test>
+    <test name="StylusSearchTest_2" >
+        <classes>
+            <class name="ui_tests.lesson_6.StylusSearchTest_2" />
+        </classes>
+    </test>
+    <test name="RozetkaTest_1" >
+        <classes>
+            <class name="ui_tests.lesson_6.StylusSearchTest_2" />
+        </classes>
+    </test>
+</suite>
