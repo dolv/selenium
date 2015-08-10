@@ -14,7 +14,7 @@ public class RozetkaTest extends TestBase{
     private final String FIRSTNAME = "Oleksandr";
     private final String LASTNAME  = "Dudchenko";
     private final String NICKNAME = "dolv";
-    private final String EXPECTED_PAGE_HEADER= "Мои настройки";
+    private final String EXPECTED_PAGE_HEADER= "Личные данные";
     private final String EXPECTED_PAGE_URL= "https://my.rozetka.com.ua/";
     @Test
     public void verifyIfMyOptionsIsOpened() {
@@ -33,16 +33,15 @@ public class RozetkaTest extends TestBase{
         FacebookLoginPage facebookLoginPage = new FacebookLoginPage(driver);
         facebookLoginPage.waitForPageLoad();
 
-        facebookLoginPage.enterFacebookLogin(RozetkaTestInputData.getFacebookLogin());
-
-        facebookLoginPage.enterFacebookPassword(RozetkaTestInputData.getFacebookPassword());
-
+        RozetkaTestInputData credentials = new RozetkaTestInputData();
+        facebookLoginPage.enterFacebookLogin(credentials.getFacebookLogin());
+        facebookLoginPage.enterFacebookPassword(credentials.getFacebookPassword());
         facebookLoginPage.clickLoginButton();
 
-//      Here we check if UpperRight cornerr link contains some of the provided credentials;
+//      Here we check if UpperRight corner link contains some of the provided credentials;
         rozetkaMainPage.switchToParentWindow();
-        String[] credentials = {FIRSTNAME, LASTNAME, NICKNAME};
-        assertTrue(rozetkaMainPage.areRightUpperConnerCredentialsCorrect(credentials));
+        String[] possibleWords = {FIRSTNAME, LASTNAME, NICKNAME};
+        assertTrue(rozetkaMainPage.areRightUpperConnerCredentialsCorrect(possibleWords));
 
         rozetkaMainPage.clickEnterUserAccountLink();
 
@@ -50,8 +49,7 @@ public class RozetkaTest extends TestBase{
         rosetkaPersonalInformationPage.waitForPageLoad();
 
         assertTrue(rosetkaPersonalInformationPage.getCurrentURL().contains(EXPECTED_PAGE_URL));
-        assertTrue(rosetkaPersonalInformationPage.getPageHeaderText().toLowerCase().contains(EXPECTED_PAGE_HEADER.toLowerCase()));
-
+        assertTrue(rosetkaPersonalInformationPage.isOpenedOptionsPageIsMine(possibleWords));
 
     }
 

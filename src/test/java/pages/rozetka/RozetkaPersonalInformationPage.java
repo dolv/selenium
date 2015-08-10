@@ -11,7 +11,10 @@ import utils.Log4Test;
 public class RozetkaPersonalInformationPage extends TestBase{
     private final By PERSONAL_INFORMATION_PAGE_HEADER_LOCATOR = By.xpath("//div[@id='personal_information']//h1");
     private WebElement personalInformationPageHeader;
+    private final By NAME_LOCATOR = By.xpath(".//*[@id='personal_information']/div/div[1]/div[2]/div[2]");
+    private WebElement personalInformationName;
     private final String PAGE_URL = "https://my.rozetka.com.ua/";
+    private boolean myOtionsPageOpened;
 
     public RozetkaPersonalInformationPage(WebDriver driver) {
         this.driver = driver;
@@ -57,5 +60,32 @@ public class RozetkaPersonalInformationPage extends TestBase{
         result = driver.getCurrentUrl();
         Log4Test.info(getCurrentTimestamp() + ": getCurrentURL() = \"" + result+"\"");
         return result;
+    }
+    public Boolean doesPersonalInformationNameContains(String[] words) {
+        boolean result = false;
+        if (personalInformationNameIsDisplayed()) {
+            String linkText = personalInformationName.getText().toLowerCase();
+            for (String word : words) {
+                if (linkText.equals(word.toLowerCase())) result = true;
+            }
+        }
+        return result;
+    }
+
+    private boolean personalInformationNameIsDisplayed() {
+        Log4Test.info(getCurrentTimestamp() + ": WebElement [personalInformationName] initialization by locator =\""+NAME_LOCATOR+"\"");
+        personalInformationName=driver.findElement(NAME_LOCATOR);
+        Boolean result = personalInformationName.isDisplayed();
+        Log4Test.info(getCurrentTimestamp() + ": WebElement [personalInformationName] displayed =\""+ Boolean.toString(result)+"\"");
+        return result;
+    }
+
+    public boolean isOpenedOptionsPageIsMine(String[] possibleNameWords) {
+        myOtionsPageOpened = false;
+        webDriverWait(driver).until(ExpectedConditions.presenceOfElementLocated(NAME_LOCATOR));
+        if (personalInformationNameIsDisplayed()){
+            myOtionsPageOpened = this.doesPersonalInformationNameContains(possibleNameWords);
+        }
+        return myOtionsPageOpened;
     }
 }

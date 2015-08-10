@@ -22,9 +22,9 @@ public class TestBase {
         Log4Test.info(getCurrentTimestamp()+": Instantiating a WebDriver");
         driver = WebDriverFactory.getWebDriver(TestData.BROWSER_NAME);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
         Log4Test.info(getCurrentTimestamp() + ": WebDriver has being instantiated.");
     }
     public WebDriverWait webDriverWait(WebDriver driver){
@@ -35,10 +35,15 @@ public class TestBase {
     public void tearDown(){
         driver.close();
         Log4Test.info(getCurrentTimestamp() + ": WebDriver browser tab has closed.");
+        try {
+            Thread.sleep(500);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         driver.quit();
         Log4Test.info(getCurrentTimestamp() + ": WebDriver has quitted.");
         try {
-            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
         }

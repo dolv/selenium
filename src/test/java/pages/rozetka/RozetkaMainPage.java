@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class RozetkaMainPage extends TestBase {
     private final String PAGE_TITLE = "ROZETKA";
-    private final By ENTER_USER_ACCOUNT_LINK_LOCATOR = By.xpath("//span[@id='header_user_menu_parent']");
+    private final By ENTER_USER_ACCOUNT_LINK_LOCATOR = By.xpath(".//span[@id='header_user_menu_parent']//a");
     private final By LOGIN_TITLE_LOCATOR = By.xpath("//div[@class='popup-css popup-auth']");
     private final By LOGIN_VK_LOCATOR = By.xpath("//div[@type='vkontakte']//a");
     private final By LOGIN_FACEBOOK_LOCATOR = By.xpath("//div[@type='facebook']//a");
@@ -32,16 +32,14 @@ public class RozetkaMainPage extends TestBase {
     }
 
     public void open(final String PAGE_URL){
-//        try {
+
         Log4Test.info(getCurrentTimestamp() + ": Opening page with address =\""+PAGE_URL+"\"");
         driver.get(PAGE_URL);
         Log4Test.info(getCurrentTimestamp() + ": wait until page title contains =\"" + PAGE_TITLE + "\"");
         webDriverWait(driver).until(ExpectedConditions.titleContains(PAGE_TITLE));
         Log4Test.info(getCurrentTimestamp() + ": After timeout opened page title is =\"" + driver.getTitle() + "\"");
-//        }catch (){
-//
-//        }
     }
+
     public boolean isOpened(String PAGE_URL){
         Boolean result = false;
         if (driver.getCurrentUrl().contains(PAGE_URL)){
@@ -68,6 +66,7 @@ public class RozetkaMainPage extends TestBase {
         Log4Test.info(getCurrentTimestamp() + ": WebElement [Login Form] displayed =\""+ Boolean.toString(result)+"\"");
         return result;
     }
+
     public boolean userAccountLinkIsDisplayed(){
         Log4Test.info(getCurrentTimestamp() + ": WebElement [userAccountLink] initialization by locator =\""+ENTER_USER_ACCOUNT_LINK_LOCATOR+"\"");
         userAccountLink=driver.findElement(ENTER_USER_ACCOUNT_LINK_LOCATOR);
@@ -75,6 +74,7 @@ public class RozetkaMainPage extends TestBase {
         Log4Test.info(getCurrentTimestamp() + ": WebElement [userAccountLink] displayed =\""+ Boolean.toString(result)+"\"");
         return result;
     }
+
     public boolean loginFacebookButtonIsDisplayed(){
         Log4Test.info(getCurrentTimestamp() + ": WebElement [loginFacebookButton] initialization by locator =\""+LOGIN_FACEBOOK_LOCATOR+"\"");
         loginFacebookButton=driver.findElement(LOGIN_FACEBOOK_LOCATOR);
@@ -98,7 +98,9 @@ public class RozetkaMainPage extends TestBase {
         Log4Test.info(getCurrentTimestamp() + ": WebElement [loginVKButton] displayed =\"" + Boolean.toString(result) + "\"");
         return result;
     }
+
     public void waitForLoginFormIsDisplayed(){
+        webDriverWait(driver).until(ExpectedConditions.presenceOfElementLocated(LOGIN_TITLE_LOCATOR));
         loginTitle = driver.findElement(LOGIN_TITLE_LOCATOR);
         webDriverWait(driver).until(ExpectedConditions.visibilityOf(loginTitle));
     }
