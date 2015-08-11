@@ -25,6 +25,8 @@ public class RozetkaMainPage extends TestBase {
     private final By LOGIN_VK_LOCATOR = By.xpath("//div[@type='vkontakte']//a");
     private final By LOGIN_FACEBOOK_LOCATOR = By.xpath("//div[@type='facebook']//a");
     private final By REMEMBER_ME_CHECKBOX_LOCATOR = By.xpath("//label[@class='checkbox auth-f-i-remember']/span");
+    private final By MENU_ITEM_NOTEBOOKS_TABLETS_AND_PCS_LOCATOR = By.xpath("//li[@menu_id='2']/a");
+    private WebElement menuItemNotebooksTabletsAndPCs;
     private WebElement loginTitle;
     private WebElement loginVKButton;
     private WebElement loginFacebookButton;
@@ -66,10 +68,10 @@ public class RozetkaMainPage extends TestBase {
         Boolean result = false;
         if (driver.getCurrentUrl().contains(PAGE_URL)){
             result = true;
+            Log4Test.info(getCurrentTimestamp() + ": isOpened() result =\"" + result + "\"");
         } else {
-            Log4Test.error(getCurrentTimestamp() + ": Openned page URL = \""+ driver.getCurrentUrl()+" differs from passer value of =\"" + PAGE_URL + "\"");
+            Log4Test.error(getCurrentTimestamp() + ": Openned page URL = \"" + driver.getCurrentUrl() + " differs from passer value of =\"" + PAGE_URL + "\"");
         }
-        Log4Test.info(getCurrentTimestamp() + ": isOpened() result =\"" + result + "\"");
         return result;
     }
 
@@ -98,6 +100,31 @@ public class RozetkaMainPage extends TestBase {
         Boolean result = userAccountLink.isDisplayed();
         Log4Test.info(getCurrentTimestamp() + ": WebElement [userAccountLink] displayed =\""+ Boolean.toString(result)+"\"");
         return result;
+    }
+
+    public boolean menuItemNotebooksTabletsAndPCsIsDisplayed(){
+        Log4Test.info(getCurrentTimestamp() + ": WebElement [menuItemNotebooksTabletsAndPCs] initialization by locator =\""+MENU_ITEM_NOTEBOOKS_TABLETS_AND_PCS_LOCATOR+"\"");
+        menuItemNotebooksTabletsAndPCs=driver.findElement(MENU_ITEM_NOTEBOOKS_TABLETS_AND_PCS_LOCATOR);
+        Boolean result = menuItemNotebooksTabletsAndPCs.isDisplayed();
+        Log4Test.info(getCurrentTimestamp() + ": WebElement [menuItemNotebooksTabletsAndPCs] displayed =\""+ Boolean.toString(result)+"\"");
+        return result;
+    }
+
+    public void clickMenuItemNotebooksTabletsAndPCs(){
+        if (menuItemNotebooksTabletsAndPCsIsDisplayed()){
+            Log4Test.info(getCurrentTimestamp() + ": sending WebElement [menuItemNotebooksTabletsAndPCs] click event.");
+            menuItemNotebooksTabletsAndPCs.click();
+            if (TestData.BROWSER_NAME.equals(BrowserTypes.IE)){
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else {
+            Log4Test.error(getCurrentTimestamp() + ": WebElement [menuItemNotebooksTabletsAndPCs] is not displayed on the page.");
+        }
     }
 
     public boolean loginFacebookButtonIsDisplayed(){

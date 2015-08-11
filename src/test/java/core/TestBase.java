@@ -32,12 +32,13 @@ public class TestBase {
                 driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
                 driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
         }
-        Log4Test.info(getCurrentTimestamp() + ": WebDriver has being instantiated.");
+        Log4Test.info(getCurrentTimestamp() + ": WebDriver has been instantiated.");
     }
     public WebDriverWait webDriverWait(WebDriver driver){
         return new WebDriverWait(driver,50);
     }
     public String getCurrentTimestamp() {return new Timestamp(new java.util.Date().getTime()).toString();}
+
     @AfterSuite
     public void tearDown(){
         try {
