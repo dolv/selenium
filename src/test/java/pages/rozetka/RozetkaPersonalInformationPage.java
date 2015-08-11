@@ -15,7 +15,8 @@ public class RozetkaPersonalInformationPage extends TestBase{
     private WebElement personalInformationName;
     private final String PAGE_URL = "https://my.rozetka.com.ua/";
     private boolean myOtionsPageOpened;
-
+    private final By LOGOUT_LINK_LOCATOR = By.xpath(".//ul[@id='header_user_menu']//a[@href='https://my.rozetka.com.ua/signout/']");
+    private WebElement logoutLink;
     public RozetkaPersonalInformationPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -87,5 +88,10 @@ public class RozetkaPersonalInformationPage extends TestBase{
             myOtionsPageOpened = this.doesPersonalInformationNameContains(possibleNameWords);
         }
         return myOtionsPageOpened;
+    }
+
+    public void clickLogoutLink() {
+        logoutLink = driver.findElement(LOGOUT_LINK_LOCATOR);
+        logoutLink.clear();
     }
 }

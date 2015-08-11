@@ -1,20 +1,26 @@
 package pages.rozetka;
 
 
+
+import core.BrowserTypes;
 import core.TestBase;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import ui_tests.lesson_7.TestData;
 import utils.Log4Test;
 
-import java.util.Iterator;
-import java.util.Set;
+
 
 public class RozetkaMainPage extends TestBase {
     private final String PAGE_TITLE = "ROZETKA";
-    private final By ENTER_USER_ACCOUNT_LINK_LOCATOR = By.xpath(".//span[@id='header_user_menu_parent']//a");
+    private By ENTER_USER_ACCOUNT_LINK_LOCATOR = By.xpath(".//*[@id='header_user_menu_parent']//a");
+    private final By ENTER_USER_ACCOUNT_LINK_LOCATOR1 = By.name("profile");
+    private final By ENTER_USER_ACCOUNT_LINK_LOCATOR2 = By.name("splash-button");
+    private final By ENTER_USER_ACCOUNT_LINK_LOCATOR_IE = By.name("signin");
     private final By LOGIN_TITLE_LOCATOR = By.xpath("//div[@class='popup-css popup-auth']");
     private final By LOGIN_VK_LOCATOR = By.xpath("//div[@type='vkontakte']//a");
     private final By LOGIN_FACEBOOK_LOCATOR = By.xpath("//div[@type='facebook']//a");
@@ -25,19 +31,35 @@ public class RozetkaMainPage extends TestBase {
     private WebElement rememberMeCheckBox;
     private WebElement enterUserAccountLink;
     private WebElement userAccountLink;
+    private String popupWindowId;
     private String mainWindowId;
 
     public RozetkaMainPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void open(final String PAGE_URL){
+    public void open(final String PAGE_URL) {
 
         Log4Test.info(getCurrentTimestamp() + ": Opening page with address =\""+PAGE_URL+"\"");
-        driver.get(PAGE_URL);
-        Log4Test.info(getCurrentTimestamp() + ": wait until page title contains =\"" + PAGE_TITLE + "\"");
-        webDriverWait(driver).until(ExpectedConditions.titleContains(PAGE_TITLE));
-        Log4Test.info(getCurrentTimestamp() + ": After timeout opened page title is =\"" + driver.getTitle() + "\"");
+        //This wrapper is for IE in particular;
+        try {
+            driver.get(PAGE_URL);
+        }catch (Exception e){
+            e.printStackTrace();
+            Log4Test.error(getCurrentTimestamp() + ": Page opening timeout. Reloading.");
+            driver.get(PAGE_URL);
+        }
+        if (TestData.BROWSER_NAME.equals(BrowserTypes.IE)){
+            Log4Test.info(getCurrentTimestamp() + ": wait until page contains element located by =\"" + ENTER_USER_ACCOUNT_LINK_LOCATOR_IE.toString() + "\"");
+            webDriverWait(driver).until(ExpectedConditions.visibilityOfElementLocated(ENTER_USER_ACCOUNT_LINK_LOCATOR_IE));
+            Log4Test.info(getCurrentTimestamp() + ": After timeout opened page address is \"" + driver.getCurrentUrl() + "\"");
+        }
+        else {
+            Log4Test.info(getCurrentTimestamp() + ": wait until page title contains \"" + PAGE_TITLE + "\"");
+            webDriverWait(driver).until(ExpectedConditions.titleContains(PAGE_TITLE));
+            Log4Test.info(getCurrentTimestamp() + ": After timeout opened page title is \"" + driver.getTitle() + "\"");
+        }
+        mainWindowId=driver.getWindowHandle();
     }
 
     public boolean isOpened(String PAGE_URL){
@@ -52,6 +74,9 @@ public class RozetkaMainPage extends TestBase {
     }
 
     public void clickEnterUserAccountLink(){
+//        if (TestData.BROWSER_NAME.equals(BrowserTypes.IE)){
+//            ENTER_USER_ACCOUNT_LINK_LOCATOR=ENTER_USER_ACCOUNT_LINK_LOCATOR_IE;
+//        }
         Log4Test.info(getCurrentTimestamp() + ": WebElement [User Account Link] initialization by locator =\""+ENTER_USER_ACCOUNT_LINK_LOCATOR+"\"");
         enterUserAccountLink = driver.findElement(ENTER_USER_ACCOUNT_LINK_LOCATOR);
         Log4Test.info(getCurrentTimestamp() + ": WebElement [User Account Link] initialized");
@@ -92,7 +117,7 @@ public class RozetkaMainPage extends TestBase {
     }
 
     public boolean loginVKButtonIsDisplayed(){
-        Log4Test.info(getCurrentTimestamp() + ": WebElement [loginVKButton] initialization by locator =\""+LOGIN_VK_LOCATOR+"\"");
+        Log4Test.info(getCurrentTimestamp() + ": WebElement [loginVKButton] initialization by locator =\"" + LOGIN_VK_LOCATOR + "\"");
         loginVKButton=driver.findElement(LOGIN_VK_LOCATOR);
         Boolean result = loginVKButton.isDisplayed();
         Log4Test.info(getCurrentTimestamp() + ": WebElement [loginVKButton] displayed =\"" + Boolean.toString(result) + "\"");
@@ -115,10 +140,27 @@ public class RozetkaMainPage extends TestBase {
         if (loginFacebookButtonIsDisplayed()) {
             Log4Test.info(getCurrentTimestamp() + ": sending WebElement [loginFacebookButton] click event.");
             loginFacebookButton.click();
-            Iterator<String> itererator = driver.getWindowHandles().iterator();
-            mainWindowId=itererator.next();
-            String  newAdwinID = itererator.next();
-            driver.switchTo().window(newAdwinID);
+            if (TestData.BROWSER_NAME.equals(BrowserTypes.IE)){
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            final ExpectedCondition<Boolean> popupWindowIsLoaded = new ExpectedCondition<Boolean>() {
+                public Boolean apply(WebDriver wd) {
+                    wd = driver;
+                    int openedWindows = wd.getWindowHandles().size();
+                    boolean popupWindowIsLoaded = openedWindows>1?true:false;
+                    if (!popupWindowIsLoaded) Log4Test.error(getCurrentTimestamp() + ": WebDriver contains " + String.valueOf(openedWindows) + " opened windows.");
+                    return popupWindowIsLoaded;
+                }
+            };
+
+            webDriverWait(driver).until(popupWindowIsLoaded);
+            String[] handles = driver.getWindowHandles().toArray(new String[0]);
+            popupWindowId = handles[handles.length - 1];
+            driver.switchTo().window(popupWindowId);
         }
         else {
             Log4Test.error(getCurrentTimestamp() + ": WebElement [loginFacebookButton] is not displayed on the page.");
@@ -136,18 +178,41 @@ public class RozetkaMainPage extends TestBase {
 
     public Boolean areRightUpperConnerCredentialsCorrect(String[] words) {
         boolean result = false;
-        if (userAccountLinkIsDisplayed()) {
-            String linkText = userAccountLink.getText().toLowerCase();
-            for (String word : words) {
-                if (linkText.equals(word.toLowerCase())) result = true;
-            }
+        switch (TestData.BROWSER_NAME) {
+            case FIRE_FOX:
+                ENTER_USER_ACCOUNT_LINK_LOCATOR=ENTER_USER_ACCOUNT_LINK_LOCATOR1;
+                break;
+            case IE:
+                ENTER_USER_ACCOUNT_LINK_LOCATOR=ENTER_USER_ACCOUNT_LINK_LOCATOR1;
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case CHROME:
+                driver.switchTo().window(mainWindowId);
+                ENTER_USER_ACCOUNT_LINK_LOCATOR=ENTER_USER_ACCOUNT_LINK_LOCATOR2;
+                break;
+            default: break;
         }
+        //if (TestData.BROWSER_NAME.equals(BrowserTypes.CHROME)) {}
+        webDriverWait(driver).until(ExpectedConditions.presenceOfElementLocated(ENTER_USER_ACCOUNT_LINK_LOCATOR));
+        webDriverWait(driver).until(ExpectedConditions.elementToBeClickable(ENTER_USER_ACCOUNT_LINK_LOCATOR));
+
+        userAccountLink = driver.findElement(ENTER_USER_ACCOUNT_LINK_LOCATOR);
+        String linkText = userAccountLink.getText().toLowerCase();
+
+        for (String word : words) if (linkText.contains(word.toLowerCase())) result = true;
         return result;
     }
 
     public void switchToParentWindow(){
-        driver.switchTo().window(mainWindowId);
-        webDriverWait(driver).until(ExpectedConditions.titleContains(PAGE_TITLE));
+        String[] handles = driver.getWindowHandles().toArray(new String[0]);
+        driver.switchTo().window(handles[handles.length - 1]);
+        if (TestData.BROWSER_NAME==BrowserTypes.CHROME){
+            driver.switchTo().defaultContent();
+        }
     }
 
 }

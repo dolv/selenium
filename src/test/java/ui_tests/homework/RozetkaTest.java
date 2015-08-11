@@ -1,11 +1,18 @@
 package ui_tests.homework;
 
 
+import core.BrowserTypes;
 import core.TestBase;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import pages.rozetka.FacebookLoginPage;
 import pages.rozetka.RozetkaMainPage;
 import pages.rozetka.RozetkaPersonalInformationPage;
+import ui_tests.lesson_7.TestData;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.testng.AssertJUnit.assertTrue;
 
@@ -16,9 +23,10 @@ public class RozetkaTest extends TestBase{
     private final String NICKNAME = "dolv";
     private final String EXPECTED_PAGE_HEADER= "Личные данные";
     private final String EXPECTED_PAGE_URL= "https://my.rozetka.com.ua/";
+    private final String SIGNOUT_URL= "https://my.rozetka.com.ua/signout/";
     @Test
     public void verifyIfMyOptionsIsOpened() {
-
+        RozetkaTestInputData credentials = new RozetkaTestInputData();
         RozetkaMainPage rozetkaMainPage = new RozetkaMainPage(driver);
         rozetkaMainPage.open(PAGE_URL);
         assertTrue(rozetkaMainPage.isOpened(PAGE_URL));
@@ -33,13 +41,12 @@ public class RozetkaTest extends TestBase{
         FacebookLoginPage facebookLoginPage = new FacebookLoginPage(driver);
         facebookLoginPage.waitForPageLoad();
 
-        RozetkaTestInputData credentials = new RozetkaTestInputData();
         facebookLoginPage.enterFacebookLogin(credentials.getFacebookLogin());
         facebookLoginPage.enterFacebookPassword(credentials.getFacebookPassword());
         facebookLoginPage.clickLoginButton();
 
-//      Here we check if UpperRight corner link contains some of the provided credentials;
         rozetkaMainPage.switchToParentWindow();
+
         String[] possibleWords = {FIRSTNAME, LASTNAME, NICKNAME};
         assertTrue(rozetkaMainPage.areRightUpperConnerCredentialsCorrect(possibleWords));
 
@@ -51,6 +58,10 @@ public class RozetkaTest extends TestBase{
         assertTrue(rosetkaPersonalInformationPage.getCurrentURL().contains(EXPECTED_PAGE_URL));
         assertTrue(rosetkaPersonalInformationPage.isOpenedOptionsPageIsMine(possibleWords));
 
+    }
+    @AfterTest
+    public void logOut(){
+        driver.get(SIGNOUT_URL);
     }
 
 }

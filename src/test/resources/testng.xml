@@ -26,9 +26,9 @@
             <class name="ui_tests.homework.RozetkaTest" />
         </classes>
     </test>
-    <test name="JavascriptTest" >
-        <classes>
-            <class name="ui_tests.lesson_10.JavaScriptPromptBox" />
-        </classes>
-    </test>
+    <!--<test name="JavascriptTest" >-->
+        <!--<classes>-->
+            <!--<class name="ui_tests.lesson_10.JavaScriptPromptBox" />-->
+        <!--</classes>-->
+    <!--</test>-->
 </suite>
