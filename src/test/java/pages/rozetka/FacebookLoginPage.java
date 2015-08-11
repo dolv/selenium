@@ -4,6 +4,7 @@ package pages.rozetka;
 import core.BrowserTypes;
 import core.TestBase;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -11,12 +12,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui_tests.lesson_7.TestData;
 import utils.Log4Test;
 
+import java.util.List;
+
 public class FacebookLoginPage extends TestBase {
     private final By EMAIL_FIELD_LOCATOR = By.id("email");
     private final By PASSWORD_FIELD_LOCATOR = By.id("pass");
     private final By LOGIN_BUTTON_LOCATOR = By.id("u_0_2");
     private final By REMEMBER_ME_CHECKBOX_LOCATOR = By.id("persist_box");
-    private final String PAGE_URL = "facebook.com";
+    private final String PAGE_URL = "www.facebook.com";
     private final String PAGE_TITLE = "Facebook";
     private WebElement emailField;
     private WebElement passwordField;
@@ -110,6 +113,11 @@ public class FacebookLoginPage extends TestBase {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        switch (TestData.BROWSER_NAME){
+            case IE:
+                webDriverWait(driver).until(ExpectedConditions.visibilityOfElementLocated(EMAIL_FIELD_LOCATOR));
+                break;
+            default:
         ExpectedCondition<Boolean> expectedCondition = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver wDr) {
                 return driver.getCurrentUrl().toLowerCase().contains(PAGE_URL);
@@ -117,7 +125,8 @@ public class FacebookLoginPage extends TestBase {
         };
         Log4Test.info(getCurrentTimestamp() + ": wait until page URL contains \"" + PAGE_URL + "\"");
         webDriverWait(driver).until(expectedCondition);
-        //Log4Test.info(getCurrentTimestamp() + ": Opening page with address =\"" + driver.getCurrentUrl() + "\"");
+
+        }
         Log4Test.info(getCurrentTimestamp() + ": loaded page URL is\"" + driver.getCurrentUrl() + "\"");
         Log4Test.info(getCurrentTimestamp() + ": wait until page title contains =\"" + PAGE_TITLE + "\"");
         webDriverWait(driver).until(ExpectedConditions.titleContains(PAGE_TITLE));

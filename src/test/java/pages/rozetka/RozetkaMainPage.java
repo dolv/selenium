@@ -178,17 +178,15 @@ public class RozetkaMainPage extends TestBase {
 
     public Boolean areRightUpperConnerCredentialsCorrect(String[] words) {
         boolean result = false;
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         switch (TestData.BROWSER_NAME) {
             case FIRE_FOX:
-                ENTER_USER_ACCOUNT_LINK_LOCATOR=ENTER_USER_ACCOUNT_LINK_LOCATOR1;
-                break;
             case IE:
                 ENTER_USER_ACCOUNT_LINK_LOCATOR=ENTER_USER_ACCOUNT_LINK_LOCATOR1;
-                try {
-                    Thread.sleep(2000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 break;
             case CHROME:
                 driver.switchTo().window(mainWindowId);
@@ -196,9 +194,10 @@ public class RozetkaMainPage extends TestBase {
                 break;
             default: break;
         }
-        //if (TestData.BROWSER_NAME.equals(BrowserTypes.CHROME)) {}
-        webDriverWait(driver).until(ExpectedConditions.presenceOfElementLocated(ENTER_USER_ACCOUNT_LINK_LOCATOR));
-        webDriverWait(driver).until(ExpectedConditions.elementToBeClickable(ENTER_USER_ACCOUNT_LINK_LOCATOR));
+//        if (TestData.BROWSER_NAME.equals(BrowserTypes.IE)) {
+//            webDriverWait(driver).until(ExpectedConditions.elementToBeClickable(ENTER_USER_ACCOUNT_LINK_LOCATOR));
+//        }else
+            webDriverWait(driver).until(ExpectedConditions.elementToBeClickable(ENTER_USER_ACCOUNT_LINK_LOCATOR));
 
         userAccountLink = driver.findElement(ENTER_USER_ACCOUNT_LINK_LOCATOR);
         String linkText = userAccountLink.getText().toLowerCase();
@@ -208,6 +207,11 @@ public class RozetkaMainPage extends TestBase {
     }
 
     public void switchToParentWindow(){
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String[] handles = driver.getWindowHandles().toArray(new String[0]);
         driver.switchTo().window(handles[handles.length - 1]);
         if (TestData.BROWSER_NAME==BrowserTypes.CHROME){

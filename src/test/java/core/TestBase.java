@@ -26,11 +26,11 @@ public class TestBase {
         switch (TestData.BROWSER_NAME) {
             case IE:
                 driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-                driver.manage().timeouts().setScriptTimeout(50, TimeUnit.SECONDS);
+                driver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
                 break;
             default:
-                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-                driver.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
+                driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+                driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
         }
         Log4Test.info(getCurrentTimestamp() + ": WebDriver has being instantiated.");
     }
@@ -40,14 +40,11 @@ public class TestBase {
     public String getCurrentTimestamp() {return new Timestamp(new java.util.Date().getTime()).toString();}
     @AfterSuite
     public void tearDown(){
-        driver.close();
-        Log4Test.info(getCurrentTimestamp() + ": WebDriver browser tab has closed.");
         try {
-            Thread.sleep(2000);
+            driver.quit();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        driver.quit();
         Log4Test.info(getCurrentTimestamp() + ": WebDriver has quitted.");
         try {
             Thread.sleep(5000);
