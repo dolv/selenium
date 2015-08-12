@@ -7,6 +7,7 @@ import pages.rozetka.RozetkaAllNotebooksPage;
 import pages.rozetka.RozetkaAppleNotebooksPage;
 import pages.rozetka.RozetkaMainPage;
 import pages.rozetka.RozetkaNotebooksTabletsAdnPCsPage;
+import utils.Log4Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +17,7 @@ import static org.testng.Assert.assertTrue;
 
 public class FinalTest extends TestBase{
     private final String PAGE_URL = "http://rozetka.com.ua/";
-    private final String NOTEBOKS_TABLETS_AND_PC_PAGE_TITLE = "Компьютеры и ноутбуки";
+    private final String NOTEBOOKS_TABLETS_AND_PC_PAGE_TITLE = "Компьютеры и ноутбуки";
     private final int NUMBER_OF_NOTEBOOK_VARIANTS = 6;
     private final List<String> MANUFACTURES_LIST = Arrays.asList(
                                                         "Acer",
@@ -34,6 +35,7 @@ public class FinalTest extends TestBase{
 
     @Test
     public void executeFinalTest(){
+
         RozetkaMainPage rozetkaMainPage = new RozetkaMainPage(driver);
         rozetkaMainPage.open(PAGE_URL);
         assertTrue(rozetkaMainPage.isOpened(PAGE_URL));
@@ -41,7 +43,7 @@ public class FinalTest extends TestBase{
 
         RozetkaNotebooksTabletsAdnPCsPage rozetkaNotebooksTabletsAdnPCsPage = new RozetkaNotebooksTabletsAdnPCsPage(driver);
         rozetkaNotebooksTabletsAdnPCsPage.waitForPageLoad();
-        assertTrue(rozetkaNotebooksTabletsAdnPCsPage.doesTitleContain(NOTEBOKS_TABLETS_AND_PC_PAGE_TITLE));
+        assertTrue(rozetkaNotebooksTabletsAdnPCsPage.doesTitleContain(NOTEBOOKS_TABLETS_AND_PC_PAGE_TITLE));
         assertTrue(rozetkaNotebooksTabletsAdnPCsPage.doesNotebookBlockWithGoodsItemsNumberIs(NUMBER_OF_NOTEBOOK_VARIANTS));
         rozetkaNotebooksTabletsAdnPCsPage.clickAllNotebooksCategoryLink();
 

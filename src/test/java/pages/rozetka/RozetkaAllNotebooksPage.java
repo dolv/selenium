@@ -50,9 +50,9 @@ public class RozetkaAllNotebooksPage extends TestBase{
         manufacturesList = driver.findElement(MANUFACTURES_LIST_LOCATOR);
         if (manufacturesList.isDisplayed()){
             result = true;
-            Log4Test.info(getCurrentTimestamp() + ": WebElement [manufacturesList] is displayed.");
+            Log4Test.info(" WebElement [manufacturesList] is displayed.");
         } else {
-            Log4Test.error(getCurrentTimestamp() + ": WebElement [manufacturesList] is not displayed on the [RozetkaAllNotebooksPage].");
+            Log4Test.error(" WebElement [manufacturesList] is not displayed on the [RozetkaAllNotebooksPage].");
         }
         return result;
     }

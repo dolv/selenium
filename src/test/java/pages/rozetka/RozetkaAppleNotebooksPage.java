@@ -40,7 +40,7 @@ public class RozetkaAppleNotebooksPage extends TestBase{
     public boolean isLoadedPageIsAppleNotebooksPage() {
         loadedPageIsAppleNotebooksPage=false;
         if (manufactureCategoryAppleCheckBoxIsEnabled()) loadedPageIsAppleNotebooksPage=true;
-        if (loadedPageIsAppleNotebooksPage) Log4Test.info(getCurrentTimestamp() + ": Loaded page is [RozetkaAppleNotebooksPage].");
+        if (loadedPageIsAppleNotebooksPage) Log4Test.info(" Loaded page is [RozetkaAppleNotebooksPage].");
         return loadedPageIsAppleNotebooksPage;
     }
 
@@ -48,9 +48,9 @@ public class RozetkaAppleNotebooksPage extends TestBase{
         boolean result=false;
         if (manufactureCategoryAppleCheckBoxIsDisplayed() & manufactureCategoryAppleCheckBox.isEnabled()){
             result = true;
-            Log4Test.info(getCurrentTimestamp() + ": WebElement [manufactureCategoryAppleCheckBox] is selected.");
+            Log4Test.info(" WebElement [manufactureCategoryAppleCheckBox] is selected.");
         } else {
-            Log4Test.error(getCurrentTimestamp() + ": WebElement [manufactureCategoryAppleCheckBox] is not selected.");
+            Log4Test.error(" WebElement [manufactureCategoryAppleCheckBox] is not selected.");
         }
         return result;
     }
@@ -60,9 +60,9 @@ public class RozetkaAppleNotebooksPage extends TestBase{
         manufactureCategoryAppleCheckBox = driver.findElement(MANUFACTURE_CATEGORY_APPLE_CHECKBOX_LOCATOR);
         if (manufactureCategoryAppleCheckBox.isDisplayed()){
             result = true;
-            Log4Test.info(getCurrentTimestamp() + ": WebElement [manufactureCategoryAppleCheckBox] is displayed.");
+            Log4Test.info(" WebElement [manufactureCategoryAppleCheckBox] is displayed.");
         } else {
-            Log4Test.error(getCurrentTimestamp() + ": WebElement [manufactureCategoryAppleCheckBox] is not displayed on the [RozetkaAppleNotebooksPage].");
+            Log4Test.error(" WebElement [manufactureCategoryAppleCheckBox] is not displayed on the [RozetkaAppleNotebooksPage].");
         }
         return result;
     }
@@ -80,7 +80,7 @@ public class RozetkaAppleNotebooksPage extends TestBase{
                         public Boolean apply(WebDriver wd) {
                             wd = driver;
                             boolean condition = driver.getCurrentUrl().contains("sort=expensive");
-                            if (!condition) Log4Test.error(getCurrentTimestamp() + ": RozetkaAppleNotebooksPage is not refreshed yet. ");
+                            if (!condition) Log4Test.error(" RozetkaAppleNotebooksPage is not refreshed yet. ");
                             return condition;
                         }
                     };
@@ -97,9 +97,9 @@ public class RozetkaAppleNotebooksPage extends TestBase{
         sortDropLink = driver.findElement(SORT_DROP_LINK_LOCATOR);
         if (sortDropLink.isDisplayed()){
             result = true;
-            Log4Test.info(getCurrentTimestamp() + ": WebElement [sortDropLink] is displayed.");
+            Log4Test.info(" WebElement [sortDropLink] is displayed.");
         } else {
-            Log4Test.error(getCurrentTimestamp() + ": WebElement [sortDropLink] is not displayed on the [RozetkaAppleNotebooksPage].");
+            Log4Test.error(" WebElement [sortDropLink] is not displayed on the [RozetkaAppleNotebooksPage].");
         }
         return result;
     }
@@ -109,9 +109,9 @@ public class RozetkaAppleNotebooksPage extends TestBase{
         blockWithGoods = driver.findElement(BLOCK_WITH_GOODS_LOCATOR);
         if (blockWithGoods.isDisplayed()){
             result = true;
-            Log4Test.info(getCurrentTimestamp() + ": WebElement [blockWithGoods] is displayed.");
+            Log4Test.info(" WebElement [blockWithGoods] is displayed.");
         } else {
-            Log4Test.error(getCurrentTimestamp() + ": WebElement [blockWithGoods] is not displayed on the [RozetkaAppleNotebooksPage].");
+            Log4Test.error(" WebElement [blockWithGoods] is not displayed on the [RozetkaAppleNotebooksPage].");
         }
         return result;
     }
@@ -119,26 +119,26 @@ public class RozetkaAppleNotebooksPage extends TestBase{
     public boolean verifyIfInBlockWithGoodsExists(String checked_item){
         boolean result = false;
         if (blockWithGoodsIsDisplayed()){
-            Log4Test.info(getCurrentTimestamp() + ": Instantiating List<WebElement> blockWithGoodsLinkList.");
+            Log4Test.info(" Instantiating List<WebElement> blockWithGoodsLinkList.");
             blockWithGoodsLinkList=driver.findElements(BLOCK_WITH_GOODS_LINK_LIST_LOCATOR);
             if (!blockWithGoodsLinkList.isEmpty()){
-                Log4Test.info(getCurrentTimestamp() + ": Successfully got [blockWithGoodsLinkList] containing " + new Integer(blockWithGoodsLinkList.size()).toString() + "items(s).");
-                Log4Test.info(getCurrentTimestamp() + ": Started [blockWithGoodsLinkList] search for link with inner text " + checked_item + "\"");
+                Log4Test.info(" Successfully got [blockWithGoodsLinkList] containing " + new Integer(blockWithGoodsLinkList.size()).toString() + "items(s).");
+                Log4Test.info(" Started [blockWithGoodsLinkList] search for link with inner text " + checked_item + "\"");
                 for (WebElement element: blockWithGoodsLinkList){
                     if (element.getText().toLowerCase().contains(checked_item.toLowerCase())){
                         result = true;
                         break;
                     }
                 }
-                Log4Test.info(getCurrentTimestamp() + ": [blockWithGoodsLinkList] processing complete. ");
+                Log4Test.info(" [blockWithGoodsLinkList] processing complete. ");
                 if(result){
-                    Log4Test.info(getCurrentTimestamp() + ": [blockWithGoodsLinkList] contains a link with inner text \"" + checked_item + "\"");
-                }else Log4Test.error(getCurrentTimestamp() + ": A link with inner text \"" + checked_item + "\" was not found among [blockWithGoodsLinkList] items.");
+                    Log4Test.info(" [blockWithGoodsLinkList] contains a link with inner text \"" + checked_item + "\"");
+                }else Log4Test.error(" A link with inner text \"" + checked_item + "\" was not found among [blockWithGoodsLinkList] items.");
             } else {
-                Log4Test.error(getCurrentTimestamp() + ": [blockWithGoodsLinkList] is empty. Verification is blocked.");
+                Log4Test.error(" [blockWithGoodsLinkList] is empty. Verification is blocked.");
             }
         } else {
-            Log4Test.error(getCurrentTimestamp() + ": Verification is imposable due to WebElement [blockWithGoods] is not displayed on the [RozetkaAppleNotebooksPage].");
+            Log4Test.error(" Verification is imposable due to WebElement [blockWithGoods] is not displayed on the [RozetkaAppleNotebooksPage].");
         }
         return result;
     }
@@ -146,28 +146,28 @@ public class RozetkaAppleNotebooksPage extends TestBase{
     public void clickAddProductToComparison(String product) {
         boolean result = false;
         if (blockWithGoodsIsDisplayed()){
-            Log4Test.info(getCurrentTimestamp() + ": Instantiating List<WebElement> blockWithGoodsLinkList.");
+            Log4Test.info(" Instantiating List<WebElement> blockWithGoodsLinkList.");
             blockWithGoodsLinkList=driver.findElements(BLOCK_WITH_GOODS_LINK_LIST_LOCATOR);
             if (!blockWithGoodsLinkList.isEmpty()){
-                Log4Test.info(getCurrentTimestamp() + ": Successfully got [blockWithGoodsLinkList] containing " + new Integer(blockWithGoodsLinkList.size()).toString() + "items(s).");
-                Log4Test.info(getCurrentTimestamp() + ": Started [blockWithGoodsLinkList] search for link with inner text " + product + "\"");
+                Log4Test.info(" Successfully got [blockWithGoodsLinkList] containing " + new Integer(blockWithGoodsLinkList.size()).toString() + "items(s).");
+                Log4Test.info(" Started [blockWithGoodsLinkList] search for link with inner text " + product + "\"");
                 for (WebElement element: blockWithGoodsLinkList){
                     if (element.getText().toLowerCase().contains(product.toLowerCase())){
-                        Log4Test.info(getCurrentTimestamp() + ": Sending click event to " + product + "\" to add it to comparison list.");
+                        Log4Test.info(" Sending click event to " + product + "\" to add it to comparison list.");
                         element.findElement(BLOCK_WITH_GOODS_ITEM_TOCOMPARISON_LOCATOR).click();
                         result = true;
                         break;
                     }
                 }
-                Log4Test.info(getCurrentTimestamp() + ": [blockWithGoodsLinkList] processing complete. ");
+                Log4Test.info(" [blockWithGoodsLinkList] processing complete. ");
                 if(result){
-                    Log4Test.info(getCurrentTimestamp() + ": [blockWithGoodsLinkList] contains a link with inner text \"" + product + "\"");
-                }else Log4Test.error(getCurrentTimestamp() + ": A link with inner text \"" + product + "\" was not found among [blockWithGoodsLinkList] items.");
+                    Log4Test.info(" [blockWithGoodsLinkList] contains a link with inner text \"" + product + "\"");
+                }else Log4Test.error(" A link with inner text \"" + product + "\" was not found among [blockWithGoodsLinkList] items.");
             } else {
-                Log4Test.error(getCurrentTimestamp() + ": [blockWithGoodsLinkList] is empty. It is imposable to add a product to comparison list.");
+                Log4Test.error(" [blockWithGoodsLinkList] is empty. It is imposable to add a product to comparison list.");
             }
         } else {
-            Log4Test.error(getCurrentTimestamp() + ": It is imposable to add a product to comparison list due to WebElement [blockWithGoods] is not displayed on the [RozetkaAppleNotebooksPage].");
+            Log4Test.error(" It is imposable to add a product to comparison list due to WebElement [blockWithGoods] is not displayed on the [RozetkaAppleNotebooksPage].");
         }
     }
 }

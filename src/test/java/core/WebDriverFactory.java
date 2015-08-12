@@ -19,11 +19,13 @@ public class WebDriverFactory {
             System.setProperty("webdriver.ie.driver",WebDriverFactory.class.getClassLoader().getResource("Drivers/iedriverserver32.exe").getPath() );
             //System.setProperty("webdriver.ie.driver",WebDriverFactory.class.getClassLoader().getResource("Drivers/iedriverserver.exe").getPath() );
 
+
         }catch (Exception e){
 
             System.out.println("Cannot launch FireFox or Chrome driver \n" + e.getMessage());
 
         }
+
     }
 
     public static WebDriver getWebDriver (BrowserTypes browserType) throws IOException {

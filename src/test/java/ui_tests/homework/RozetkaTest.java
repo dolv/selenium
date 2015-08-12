@@ -11,6 +11,7 @@ import pages.rozetka.FacebookLoginPage;
 import pages.rozetka.RozetkaMainPage;
 import pages.rozetka.RozetkaPersonalInformationPage;
 import ui_tests.lesson_7.TestData;
+import utils.Log4Test;
 
 import java.util.concurrent.TimeUnit;
 
@@ -61,6 +62,7 @@ public class RozetkaTest extends TestBase{
     }
     @AfterTest
     public void logOut(){
+        Log4Test.info("Test complete. Loggin out from the page.");
         driver.get(SIGNOUT_URL);
     }
 
