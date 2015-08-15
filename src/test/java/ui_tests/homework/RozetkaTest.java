@@ -22,7 +22,6 @@ public class RozetkaTest extends TestBase{
     private final String FIRSTNAME = "Oleksandr";
     private final String LASTNAME  = "Dudchenko";
     private final String NICKNAME = "dolv";
-    private final String EXPECTED_PAGE_HEADER= "Личные данные";
     private final String EXPECTED_PAGE_URL= "https://my.rozetka.com.ua/";
     private final String SIGNOUT_URL= "https://my.rozetka.com.ua/signout/";
     @Test
@@ -62,7 +61,7 @@ public class RozetkaTest extends TestBase{
     }
     @AfterTest
     public void logOut(){
-        Log4Test.info("Test complete. Loggin out from the page.");
+        Log4Test.info("Test complete. Logging out from the page.");
         driver.get(SIGNOUT_URL);
     }
 
