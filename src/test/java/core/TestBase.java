@@ -194,7 +194,7 @@ public class TestBase {
 
             Log4Test.info("        Processing the page node [" + patternedString(i++, pageBodyChildList.size(), " ") + "/" + Integer.toString(pageBodyChildList.size()) + "].");
 
-            scrollToWebElement(element);
+            if (element.isDisplayed()) scrollToWebElement(element);
 //            if (element.getText().length()!=TEXT.length()){
 //                Log4Test.info("        The element's inner text length ["+element.getText()+ "].");
 //            }

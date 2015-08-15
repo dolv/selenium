@@ -33,7 +33,7 @@ public class RozetkaMainPage extends TestBase {
 
     private final By REMEMBER_ME_CHECKBOX_LOCATOR = By.xpath("//label[@class='checkbox auth-f-i-remember']");
 
-    private final By MENU_ITEM_NOTEBOOKS_TABLETS_AND_PCS_LOCATOR = By.xpath("//li[@menu_id='2']/a");
+    private By MENU_ITEM_NOTEBOOKS_TABLETS_AND_PCS_LOCATOR;
 
     private WebElement menuItemNotebooksTabletsAndPCs;
 
@@ -62,6 +62,16 @@ public class RozetkaMainPage extends TestBase {
         Log4Test.info("Instantiating a RozetkaMainPage");
 
         this.driver = driver;
+
+        switch (TestData.BROWSER_NAME){
+
+            case IE:
+                MENU_ITEM_NOTEBOOKS_TABLETS_AND_PCS_LOCATOR = By.xpath("//li[@menu_id='2']");
+                break;
+
+            default:
+                MENU_ITEM_NOTEBOOKS_TABLETS_AND_PCS_LOCATOR = By.xpath("//li[@menu_id='2']/a");
+        }
 
         Log4Test.info("RozetkaMainPage instance has been received.");
 
