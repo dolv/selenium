@@ -26,7 +26,7 @@
             <class name="ui_tests.homework.RozetkaTest" />
         </classes>
     </test>-->
-    <test name="RozetkaTest_1" >
+    <test name="FinalTask_Test" >
         <classes>
             <class name="ui_tests.final_task.FinalTest" />
         </classes>
