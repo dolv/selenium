@@ -32,7 +32,8 @@ public class WebDriverFactory {
         switch (browserType) {
             case FIRE_FOX:
                 ProfilesIni profile = new ProfilesIni();
-                FirefoxProfile ffprofile = profile.getProfile("SELENIUM");
+                //FirefoxProfile ffprofile = profile.getProfile("SELENIUM");
+                FirefoxProfile ffprofile = profile.getProfile("MyTestingProfile");
 
                 return new FirefoxDriver(ffprofile);
 

@@ -14,6 +14,8 @@ import static org.testng.Assert.assertTrue;
 
 public class FinalTest extends TestBase{
 
+    private boolean test_passed = false;
+
     private final String PAGE_URL = "http://rozetka.com.ua/";
 
     private final String NOTEBOOKS_TABLETS_AND_PC_PAGE_TITLE = "Компьютеры и ноутбуки";
@@ -36,7 +38,7 @@ public class FinalTest extends TestBase{
 
     private final String EXPECTED_TEXT = "Сравниваем Ноутбуки";
 
-    private final String[] PRODUCT = {
+    private final String[] PRODUCTS = {
             "Apple MacBook Pro Retina 13\" (Z0QP000X6)",
             "Apple MacBook Pro Retina 15\" (MGXA2UA/A)"
     };
@@ -86,15 +88,15 @@ public class FinalTest extends TestBase{
 
         boolean productExists ;
 
-        productExists = onRozetkaAppleNotebooksPage.inBlockWithGoodsExists(PRODUCT[0]);
+        productExists = onRozetkaAppleNotebooksPage.inBlockWithGoodsExists(PRODUCTS[0]);
 
         assertTrue(productExists);
 
         onRozetkaAppleNotebooksPage.clickAddProductToComparison();
 
-        assertTrue(onRozetkaAppleNotebooksPage.doesComparisonListContainAddedProducts(new String[]{PRODUCT[0]}));
+        assertTrue(onRozetkaAppleNotebooksPage.doesComparisonListContainAddedProducts(new String[]{PRODUCTS[0]}));
 
-        productExists = onRozetkaAppleNotebooksPage.inBlockWithGoodsExists(PRODUCT[1]);
+        productExists = onRozetkaAppleNotebooksPage.inBlockWithGoodsExists(PRODUCTS[1]);
 
         assertTrue(productExists);
 
@@ -102,7 +104,7 @@ public class FinalTest extends TestBase{
 
         boolean allArePresent;
 
-        allArePresent = onRozetkaAppleNotebooksPage.doesComparisonListContainAddedProducts(PRODUCT);
+        allArePresent = onRozetkaAppleNotebooksPage.doesComparisonListContainAddedProducts(PRODUCTS);
 
         assertTrue(allArePresent);
 
@@ -115,14 +117,17 @@ public class FinalTest extends TestBase{
 
         assertTrue(comparisonPage.doesThePageContain(EXPECTED_TEXT));
 
-        assertTrue(comparisonPage.doesThePageContainProcucts(PRODUCT));
+        assertTrue(comparisonPage.doesThePageContainProcucts(PRODUCTS));
 
+        test_passed=true;
     }
 
     @AfterTest
     public void TestCompletion(){
 
-        Log4Test.info("Test Completed.");
+        if (test_passed){
+            Log4Test.info("TEST PASSED.");
+        }else Log4Test.info("TEST FAILED.");
 
     }
 

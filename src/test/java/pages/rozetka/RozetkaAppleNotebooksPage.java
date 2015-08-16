@@ -1,5 +1,6 @@
 package pages.rozetka;
 
+import core.BrowserTypes;
 import core.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -31,19 +32,23 @@ public class RozetkaAppleNotebooksPage extends TestBase{
 
     private final By SORT_DROP_MENU_ITEMS_LIST_LOCATOR = By.xpath(".//*[@name='drop_menu']//li/a");
 
-    private final By BLOCK_WITH_GOODS_LIST_ITEMS_LOCATOR=By.xpath("//div[contains(@class,'g-i-tile-i available') or contains(@class,'g-i-tile-i unavailable')]");
+    //private final By BLOCK_WITH_GOODS_LIST_ITEMS_LOCATOR=By.xpath("//div[contains(@class,'g-i-tile-i available') or contains(@class,'g-i-tile-i unavailable')]");
+    private final By BLOCK_WITH_GOODS_LIST_ITEMS_LOCATOR=By.xpath("//div[contains(@class,'over-wraper')]");
 
-    protected String foundProductXPath;
-
-    private By ADD_TOCOMPARISON_LOCATOR;
+    //private By ADD_TOCOMPARISON_LOCATOR= By.xpath("//span[@class='g-compare']");;
+    private By ADD_TOCOMPARISON_LOCATOR= By.xpath("//label");
 
     private List<WebElement> sortDropMenuItemsList;
 
     private List<WebElement> blockWithGoodsListItems;
 
-    private final By COMPARISON_CATALOG_LOCATOR = By.id("catalog-comparison");
+    private By COMPARISON_CATALOG_LOCATOR = By.id("catalog-comparison");
 
-    private final By COMPARISON_CATALOG_ITEMS_LOCATOR = By.xpath(".//*[contains(@class,'list-compare-l-i')]");
+    private final By FOUND_PRODUCT_LOCATOR = By.xpath("//*[@unic_testing_id='labeled']");
+
+    private WebElement foundProduct;
+
+    private final By COMPARISON_CATALOG_ITEMS_LOCATOR = By.xpath(".//*[contains(@class,'list-compare-l-i')]/a[not (@class='delete')]");
 
     private final By COMPARE_LINK_LOCATOR = By.xpath("//a[@class='novisited list-compare-more-link arrow-link']/span");
 
@@ -60,14 +65,6 @@ public class RozetkaAppleNotebooksPage extends TestBase{
         this.driver = driver;
 
         Log4Test.info("RozetkaAppleNotebooksPage instance has been received.");
-        switch (TestData.BROWSER_NAME){
-            case CHROME:
-                ADD_TOCOMPARISON_LOCATOR = By.xpath("//li[2]");
-                //ADD_TOCOMPARISON_LOCATOR=By.name("tocomparison");
-                break;
-            default:
-                ADD_TOCOMPARISON_LOCATOR = By.xpath("//span[@class='g-compare']");
-        }
 
     }
 
@@ -290,9 +287,9 @@ public class RozetkaAppleNotebooksPage extends TestBase{
 
                             result = true;
 
-                            String value = element.findElement(By.tagName("input")).getAttribute("value");
+                            ((JavascriptExecutor)driver).executeScript("arguments[0].setAttribute('unic_testing_id', 'labeled')",element);
 
-                            foundProductXPath = "//input[@value='" + value + "']/following-sibling::div[@class='g-i-tile-i-box-desc']";
+                            foundProduct = driver.findElement(FOUND_PRODUCT_LOCATOR);
 
                             break;
 
@@ -316,40 +313,41 @@ public class RozetkaAppleNotebooksPage extends TestBase{
 
     }
 
-    public void clickAddProductToComparison(String xpath) {
+    public void clickAddProductToComparison() {
 
-        Log4Test.info("Attempting to add a [" + driver.findElement(By.xpath(xpath)).getText() + "] to comparison list.");
+        Log4Test.info("Attempting to add a [" + driver.findElement(FOUND_PRODUCT_LOCATOR).getText() + "] to comparison list.");
 
-        scrollToWebElement(driver.findElement(By.xpath(xpath)));
+        scrollToWebElement(driver.findElement(FOUND_PRODUCT_LOCATOR));
 
-        String addTocompareXPath = xpath+ADD_TOCOMPARISON_LOCATOR.toString().substring(10);
+        Log4Test.info("Initializing WebElement [add to comparison list] of the founded product.");
 
-        WebElement addToComparison = driver.findElement(By.xpath(addTocompareXPath));
+        String addToComparisonXPath = FOUND_PRODUCT_LOCATOR.toString().substring(10)+ADD_TOCOMPARISON_LOCATOR.toString().substring(10);
+
+        WebElement addToComparison = driver.findElement(By.xpath(addToComparisonXPath));
 
         Log4Test.info("The WebElement [add to comparison list] of the product successfully initialized.");
 
+        scrollToWebElement(addToComparison);
+
+        Log4Test.info("Positioning a mouse pointer at the WebElement [add to comparison list].");
+
+        new Actions(driver).moveToElement(addToComparison).perform();
+
+        Log4Test.info("Appliying explicit wait until the web element is clickable.");
+
         webDriverWait(driver).until(ExpectedConditions.elementToBeClickable(addToComparison));
+
+        Log4Test.info("Applied explicit wait is over.");
+
+        Log4Test.info("Removing unic-tesing-id.");
+
+        ((JavascriptExecutor)driver).executeScript("arguments[0].removeAttribute('unic_testing_id')", foundProduct);
 
         Log4Test.info("Sending click event.");
 
-        switch (TestData.BROWSER_NAME){
-            case CHROME:
-                ((JavascriptExecutor)driver).executeScript("window.scrollTo(" + addToComparison.getLocation().getX() + "," + addToComparison.getLocation().getY() + ");");
-                break;
-
-            default:
-
-                addToComparison.click();
-
-        }
+        addToComparison.click();
 
         Log4Test.info("Click performed.");
-
-    }
-
-    public void clickAddProductToComparison() {
-
-        clickAddProductToComparison(foundProductXPath);
 
     }
 

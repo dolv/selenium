@@ -38,6 +38,7 @@ public class RozetkaComparisonPage extends TestBase {
         Log4Test.info("     Applying explicit wait until WebElement located the selector \""+COMPARISON_TABLE_FIRST_ROW_LOCATOR.toString()+"\" is visible.");
 
         webDriverWait(driver).until(ExpectedConditions.visibilityOfElementLocated(COMPARISON_TABLE_FIRST_ROW_LOCATOR));
+        webDriverWait(driver).until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
 
         Log4Test.info("     The applied explicit wait is over.");
 
@@ -73,7 +74,7 @@ public class RozetkaComparisonPage extends TestBase {
 
         } else Log4Test.error("There are no correct comparison table displayed. Verification cancelled.");
 
-        message = "\"Completed verification if comparison table contains [";
+        message = "Completed verification if comparison table contains [";
 
         Log4Test.info(message + String.join(lSep(message), PRODUCTS)+ "].");
 

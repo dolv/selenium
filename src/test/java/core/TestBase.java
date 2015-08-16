@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -184,6 +185,7 @@ public class TestBase {
         Log4Test.info("     Initializing list of the page body nodes. ");
         //Parser parser = new Parser().createParser(driver.findElement(By.tagName("HTML")).toString(), driver.findElement(By.xpath(".//meta[@charset]")).getText());
 
+        webDriverWait(driver).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//body//*")));
         List<WebElement> pageBodyChildList = driver.findElements(By.xpath("//body//*"));
 
         Log4Test.info("     The page body node list initialised "+ Integer.toString(pageBodyChildList.size()) + " with node(s).");
@@ -194,25 +196,33 @@ public class TestBase {
 
             Log4Test.info("        Processing the page node [" + patternedString(i++, pageBodyChildList.size(), " ") + "/" + Integer.toString(pageBodyChildList.size()) + "].");
 
-            if (element.isDisplayed()) scrollToWebElement(element);
-//            if (element.getText().length()!=TEXT.length()){
-//                Log4Test.info("        The element's inner text length ["+element.getText()+ "].");
-//            }
-//          Log4Test.info("        The element inner text is ["+element.getText()+ "].");
+            if (element.isDisplayed()) {
 
-            Log4Test.info("            Checking if it contains [" + TEXT + "]");
-
-            if (element.getText().toLowerCase().contains(TEXT.toLowerCase())){
-
-                if (element.isDisplayed()) {
-
-                    Log4Test.info("                COINCIDENCE DETECTED.");
-                    result = true;
-                    break;
+                switch (TestData.BROWSER_NAME) {
+                    case CHROME:
+                        new Actions(driver).moveToElement(element).perform();
+                        break;
+                    default:
 
                 }
 
-            }else Log4Test.info("                Coincidence not detected. Skipping...");
+                scrollToWebElement(element);
+
+                Log4Test.info("            Checking if it contains [" + TEXT + "]");
+
+                if (element.getText().toLowerCase().contains(TEXT.toLowerCase())){
+
+                    if (element.isDisplayed()) {
+
+                        Log4Test.info("                COINCIDENCE DETECTED.");
+                        result = true;
+                        break;
+
+                    }
+
+                }else Log4Test.info("                Coincidence not detected. Skipping...");
+
+            }else Log4Test.info("            The node is not displayed. Skipping...");
 
         }
 
@@ -260,7 +270,7 @@ public class TestBase {
         try {
 
             System.setProperty("log4j.configurationFile", Log4Test.class.getClassLoader().getResource("log4j.properties").getPath());
-            System.setProperty("SELENIUM_TEST_LOG_FILE", System.getProperty("user.dir") + "\\application.log");
+            System.setProperty("SELENIUM_TEST_LOG_FILE", System.getProperty("user.dir") + "\\application_"+TestData.BROWSER_NAME.toString()+".log");
 
         }catch (Exception e){
 
