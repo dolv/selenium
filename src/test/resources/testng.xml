@@ -21,14 +21,19 @@
             <class name="ui_tests.lesson_6.StylusSearchTest_2" />
         </classes>
     </test>-->
-    <test name="RozetkaTest_1" >
+    <!--<test name="RozetkaTest_1" >
         <classes>
             <class name="ui_tests.homework.RozetkaTest" />
         </classes>
+    </test>-->
+    <test name="RozetkaTest_1" >
+        <classes>
+            <class name="ui_tests.final_task.FinalTest" />
+        </classes>
     </test>
-    <!--<test name="JavascriptTest" >-->
-        <!--<classes>-->
-            <!--<class name="ui_tests.lesson_10.JavaScriptPromptBox" />-->
-        <!--</classes>-->
-    <!--</test>-->
+    <!--<test name="JavascriptTest" >
+        <classes>
+            <class name="ui_tests.lesson_10.JavaScriptPromptBox" />
+        </classes>
+    </test>-->
 </suite>
