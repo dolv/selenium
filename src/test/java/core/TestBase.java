@@ -202,8 +202,6 @@ public class TestBase {
                     case CHROME:
                         new Actions(driver).moveToElement(element).perform();
                         break;
-                    default:
-
                 }
 
                 scrollToWebElement(element);
@@ -278,7 +276,7 @@ public class TestBase {
 
         }
 
-        Log4Test.info("Instantiating a WebDriver");
+        Log4Test.info("Instantiating a "+TestData.BROWSER_NAME.toString() +" WebDriver ");
 
         driver = WebDriverFactory.getWebDriver(TestData.BROWSER_NAME);
         driver.manage().window().maximize();
