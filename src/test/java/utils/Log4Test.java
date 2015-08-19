@@ -1,10 +1,8 @@
 package utils;
 
-import org.apache.log4j.Appender;
 import org.apache.log4j.Logger;
 import org.testng.Reporter;
-
-import java.sql.Timestamp;
+import core.TestData;
 
 public class Log4Test {
     private static final Logger LOGGER = Logger.getLogger(Log4Test.class);
@@ -15,6 +13,7 @@ public class Log4Test {
     private static final String INFO_LOG = "\"%s\"";
     private static final String ERROR_LOG = INFO_LOG;
     private Log4Test(){
+
 
     }
 //    public static String getCurrentTimestamp() {return new Timestamp(new java.util.Date().getTime()).toString();}

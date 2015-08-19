@@ -1,29 +1,25 @@
 package ui_tests.homework;
 
 
-import core.BrowserTypes;
 import core.TestBase;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import pages.rozetka.FacebookLoginPage;
 import pages.rozetka.RozetkaMainPage;
 import pages.rozetka.RozetkaPersonalInformationPage;
-import ui_tests.lesson_7.TestData;
 import utils.Log4Test;
-
-import java.util.concurrent.TimeUnit;
 
 import static org.testng.AssertJUnit.assertTrue;
 
 public class RozetkaTest extends TestBase{
     private final String PAGE_URL = "http://rozetka.com.ua/";
-    private final String FIRSTNAME = "Oleksandr";
+    private final String FIRSTNAME = "Olexandr";
     private final String LASTNAME  = "Dudchenko";
     private final String NICKNAME = "dolv";
     private final String EXPECTED_PAGE_URL= "https://my.rozetka.com.ua/";
     private final String SIGNOUT_URL= "https://my.rozetka.com.ua/signout/";
+    private boolean test_passed=false;
+
     @Test
     public void verifyIfMyOptionsIsOpened() {
         RozetkaTestInputData credentials = new RozetkaTestInputData();
@@ -47,7 +43,7 @@ public class RozetkaTest extends TestBase{
 
         rozetkaMainPage.switchToParentWindow();
 
-        String[] possibleWords = {FIRSTNAME, LASTNAME, NICKNAME};
+        String[] possibleWords = {FIRSTNAME, LASTNAME};
         assertTrue(rozetkaMainPage.areRightUpperConnerCredentialsCorrect(possibleWords));
 
         rozetkaMainPage.clickEnterUserAccountLink();
@@ -58,9 +54,14 @@ public class RozetkaTest extends TestBase{
         assertTrue(rosetkaPersonalInformationPage.getCurrentURL().contains(EXPECTED_PAGE_URL));
         assertTrue(rosetkaPersonalInformationPage.isOpenedOptionsPageIsMine(possibleWords));
 
+        test_passed=true;
+
     }
     @AfterTest
     public void logOut(){
+        if (test_passed) {
+            Log4Test.info("TEST PASSED.");
+        }else Log4Test.info("TEST FAILED.");
         Log4Test.info("Test complete. Logging out from the page.");
         driver.get(SIGNOUT_URL);
     }

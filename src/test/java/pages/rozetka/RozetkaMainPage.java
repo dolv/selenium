@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import ui_tests.lesson_7.TestData;
+import core.TestData;
 import utils.Log4Test;
 
 import java.util.Set;
@@ -270,7 +270,7 @@ public class RozetkaMainPage extends TestBase {
     }
 
     public void waitForLoginFormIsDisplayed(){
-        webDriverWaitUntilElementIsVisible(driver,LOGIN_TITLE_LOCATOR);
+        webDriverWaitUntilElementIsVisible(driver, LOGIN_TITLE_LOCATOR);
     }
 
     public void clickLoginViaFacebook(){
@@ -486,8 +486,9 @@ public class RozetkaMainPage extends TestBase {
         userAccountLink = driver.findElement(ENTER_USER_ACCOUNT_LINK_LOCATOR);
 
         String linkText = userAccountLink.getText().toLowerCase();
-
-        for (String word : words) if (linkText.contains(word.toLowerCase())) result = true;
+        int i=0;
+        for (String word : words) if (linkText.contains(word.toLowerCase())) i++;
+        result = words.length==i;
 
         Log4Test.info(" Completed verification of credentials appeared in right upper conner of the page.");
 

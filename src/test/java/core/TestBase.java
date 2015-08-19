@@ -11,13 +11,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import ui_tests.lesson_7.TestData;
 import utils.Log4Test;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -32,6 +28,65 @@ public class TestBase {
     protected int coordinateY=0;
 
     final public String NEWLINE = System.getProperty("line.separator");
+
+    @BeforeSuite
+    public void setUP()throws IOException{
+
+        try {
+
+            System.setProperty("log4j.configurationFile", Log4Test.class.getClassLoader().getResource("log4j.properties").getPath());
+            System.setProperty("SELENIUM_TEST_LOG_FILE", System.getProperty("user.dir") + "\\application_"+ TestData.BROWSER_NAME.toString()+".log");
+
+        }catch (Exception e){
+
+            System.out.println("Cannot set system property log4j.configurationFile \n" + e.getMessage());
+
+        }
+
+        Log4Test.info("Instantiating a " + TestData.BROWSER_NAME.toString() + " WebDriver ");
+
+        driver = WebDriverFactory.getWebDriver(TestData.BROWSER_NAME);
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+        switch (TestData.BROWSER_NAME) {
+
+            case IE:
+                driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+                driver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
+                break;
+
+            default:
+                driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+                driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
+        }
+
+        Log4Test.info("WebDriver instance has been received.");
+
+    }
+
+    @AfterSuite
+    public void tearDown(){
+
+        try {
+
+            driver.quit();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        Log4Test.info("WebDriver has quitted.");
+
+        try {
+            Thread.sleep(5000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public boolean webElementIsDisplayed(String webElementName, By webElementLocator){
 
@@ -232,7 +287,6 @@ public class TestBase {
 
     }
 
-
     public String lSep(String s){
 
         String lineseparator="";
@@ -259,65 +313,6 @@ public class TestBase {
     public String zeroPatternedString(int i, int total){
 
         return patternedString(i, total, "0");
-
-    }
-
-    @BeforeSuite
-    public void setUP()throws IOException{
-
-        try {
-
-            System.setProperty("log4j.configurationFile", Log4Test.class.getClassLoader().getResource("log4j.properties").getPath());
-            System.setProperty("SELENIUM_TEST_LOG_FILE", System.getProperty("user.dir") + "\\application_"+TestData.BROWSER_NAME.toString()+".log");
-
-        }catch (Exception e){
-
-            System.out.println("Cannot set system property log4j.configurationFile \n" + e.getMessage());
-
-        }
-
-        Log4Test.info("Instantiating a "+TestData.BROWSER_NAME.toString() +" WebDriver ");
-
-        driver = WebDriverFactory.getWebDriver(TestData.BROWSER_NAME);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-        switch (TestData.BROWSER_NAME) {
-
-            case IE:
-                driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-                driver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
-                break;
-
-            default:
-                driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-                driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-        }
-
-        Log4Test.info("WebDriver instance has been received.");
-
-    }
-
-    @AfterSuite
-    public void tearDown(){
-
-        try {
-
-            driver.quit();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
-
-        Log4Test.info("WebDriver has quitted.");
-
-        try {
-            Thread.sleep(5000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 

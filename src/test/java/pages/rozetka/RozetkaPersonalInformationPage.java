@@ -112,16 +112,17 @@ public class RozetkaPersonalInformationPage extends TestBase{
 
                     Log4Test.info("     Processing the above mentioned word list.");
                     String linkText = personalInformationName.getText().toLowerCase();
-
+                    i=0;
                     for (String word : words) {
 
-                        if (linkText.equals(word.toLowerCase())) {
+                        if (linkText.contains(word.toLowerCase())) {
 
-                            result = true;
+                            i++;
 
-                            Log4Test.info("     The word \""+word+"\" found. That is enough.");
+                            Log4Test.info("     The word \""+word+"\" found.");
 
                         }
+                        result = words.length==i;
 
                     }
 

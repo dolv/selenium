@@ -1,18 +1,12 @@
 package pages.rozetka;
 
 
-import core.BrowserTypes;
 import core.TestBase;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import ui_tests.lesson_7.TestData;
 import utils.Log4Test;
-
-import java.util.List;
 
 public class FacebookLoginPage extends TestBase {
 
