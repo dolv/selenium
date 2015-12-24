@@ -11,7 +11,10 @@ import org.openqa.selenium.interactions.Mouse;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -46,9 +49,8 @@ public class SearchPageTest {
         element.click();
 
     }
-
-    @Test
-    public void executeTest() throws IOException {
+    @BeforeTest
+    public void setUP(){
 
         ProfilesIni profile = new ProfilesIni();
 
@@ -65,6 +67,11 @@ public class SearchPageTest {
         webDriver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 
         webDriver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
+
+    }
+
+    @Test
+    public void executeTest() throws IOException {
 
         webDriver.get(MAINPAGE_URL);
 
@@ -114,7 +121,20 @@ public class SearchPageTest {
 
         assertTrue(URI_QUERY_page2.equalsIgnoreCase(URI_QUERY));
 
-        webDriver.quit();
+    }
+
+    @AfterTest
+    public void tearDown(){
+
+        try {
+
+            webDriver.quit();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
 
     }
 
