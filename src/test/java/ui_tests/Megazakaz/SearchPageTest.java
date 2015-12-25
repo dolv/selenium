@@ -15,9 +15,9 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class SearchPageTest {
@@ -71,7 +71,7 @@ public class SearchPageTest {
     }
 
     @Test
-    public void executeTest() throws IOException {
+    public void executeTest() throws StringIndexOutOfBoundsException {
 
         webDriver.get(MAINPAGE_URL);
 
@@ -117,9 +117,17 @@ public class SearchPageTest {
 
         String URI_QUERY_page2 = webDriver.getCurrentUrl();
 
-        URI_QUERY_page2 = URI_QUERY_page2.substring(URI_QUERY_page2.indexOf("?"));
+        try {
 
-        assertTrue(URI_QUERY_page2.equalsIgnoreCase(URI_QUERY));
+            URI_QUERY_page2 = URI_QUERY_page2.substring(URI_QUERY_page2.indexOf("?"));
+
+        } catch (StringIndexOutOfBoundsException e) {
+
+            URI_QUERY_page2 = "";
+
+        }
+        //assertTrue(URI_QUERY_page2.equalsIgnoreCase(URI_QUERY));
+        assertFalse(URI_QUERY_page2.equalsIgnoreCase(URI_QUERY));
 
     }
 

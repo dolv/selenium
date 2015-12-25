@@ -22,7 +22,7 @@ public class RozetkaNotebooksTabletsAdnPCsPage extends TestBase{
 
     private List<WebElement> notebookBlockWithGoodsList;
 
-    private final By ALL_NOTEBOOKS_CATEGORY_LINK = By.xpath("//div[@class='container']/*[1]//*[1][@name='block_with_goods']//a[@name='group_category']");
+    private final By ALL_NOTEBOOKS_CATEGORY_LINK = By.xpath(".//*[@data-name='group_category']/span[contains(text(),'Все ноутбуки')]");
 
     private WebElement allNotebooksCategoryLink;
 

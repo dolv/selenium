@@ -1,22 +1,19 @@
 package seleniumGrid;
 
 
-import core.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.Log4Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -26,8 +23,8 @@ public class GridTest {
 
     private StringBuffer verificationErrors = new StringBuffer();
 
-    @Parameters({"platform", "browser", "version", "url"})
-    @BeforeTest(alwaysRun = true)
+  //  @Parameters({"platform", "browser", "version", "url"})
+   // @BeforeTest(alwaysRun = true)
     public void setup(String platform, String browser, String version, String url) throws MalformedURLException {
 
         DesiredCapabilities caps = new DesiredCapabilities();

@@ -16,11 +16,11 @@ public class StylusSearchIPhone6 extends TestBase {
     private StylusAppStorePage stylusAppStorePage;
     private StylusIPhonesPage stylusIPhonesPage;
     private StylusIPhone6Page stylusIPhone6Page;
-    private final String MINPRICE = "20000";
+    private final String MINPRICE = "15000";
     private final String MAXPRICE = "30000";
-    private final By SEARCH_ELEMENT_LOCATOR = By.xpath("//h1[@itemprop='name']");
+    private final By SEARCH_ELEMENT_LOCATOR = By.xpath("//a[.='Apple iPhone 6 64GB Space Gray']");
 
-    @Test
+    @Test (testName = "StylusSearch")
     public void foundSearchElementStylusTest() {
 
         stylusMainPage = new StylusMainPage(driver);

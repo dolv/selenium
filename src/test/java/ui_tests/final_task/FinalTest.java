@@ -40,7 +40,7 @@ public class FinalTest extends TestBase{
 
     private final String[] PRODUCTS = {
             "Apple MacBook Pro Retina 13\" (Z0QP000X6)",
-            "Apple MacBook Pro Retina 15\" (MGXA2UA/A)"
+            "Apple MacBook Pro Retina 15\" (Z0RG00050)"
     };
 
     @Test

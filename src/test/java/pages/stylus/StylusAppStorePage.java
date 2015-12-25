@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class StylusAppStorePage extends TestBase{
 
-    private final String TITLE = "Apple Store";
+    private final String TITLE = "Apple |";
     private final By IPHONE_CATEGORY_LINK_LOCATOR = By.xpath("//div[contains(concat(' ', @class, ' '),' categories ')][1]//a[contains(concat(' ',@href,' '),'apple_iphones')]/span");
     private WebElement iphoneCategoryLink;
 
@@ -18,7 +18,7 @@ public class StylusAppStorePage extends TestBase{
         this.driver = driver;
     }
     public void waitForTitleLoad (){
-        webDriverWait(driver).until(ExpectedConditions.titleContains(TITLE));
+        webDriverWait(driver).until(ExpectedConditions.textToBePresentInElementLocated(By.tagName("h1"), TITLE));
     }
     public void clickIphoneCategoryLink (){
         iphoneCategoryLink = driver.findElement(IPHONE_CATEGORY_LINK_LOCATOR);

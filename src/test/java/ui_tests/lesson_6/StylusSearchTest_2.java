@@ -16,7 +16,7 @@ public class StylusSearchTest_2 extends TestBase {
     private WebElement foundItemsNumber;
     private WebElement foundSearchElement;
 
-    @Test
+    @Test (testName = "StylusSearch")
     public void foundSearchElementStylusTest() {
         
         StylusMainPage onStylusMainPage = new StylusMainPage(driver);

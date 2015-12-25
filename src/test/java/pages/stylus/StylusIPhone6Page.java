@@ -2,18 +2,16 @@ package pages.stylus;
 
 import core.BrowserTypes;
 import core.TestBase;
+import core.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import core.TestData;
-
-import static org.testng.AssertJUnit.assertTrue;
 
 public class StylusIPhone6Page extends TestBase{
 
-    private final String HEAD = "Apple iPhone 6";
+    private final String HEAD = "iPhone 6";
     private final By PAGE_HEAD_LOCATOR = By.xpath("//h1");
     private WebElement pageHead;
     private final By FILTER_PRICE_MIN_LOCATOR = By.id("min");

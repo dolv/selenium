@@ -10,11 +10,11 @@ import java.util.List;
 
 public class RozetkaAllNotebooksPage extends TestBase{
 
-    private final By MANUFACTURES_LIST_LOCATOR = By.xpath("//li[@class='m-cat-l-i'][2]");
+    private final By MANUFACTURES_LIST_LOCATOR = By.xpath("//li[@param='22']");
 
     private WebElement manufacturesList;
 
-    private final By MANUFACTURES_LIST_ITEMS_LOCATOR = By.xpath("//li[@class='m-cat-l-i'][2]//li/a");
+    private final By MANUFACTURES_LIST_ITEMS_LOCATOR = By.xpath("//li[@param='22']/ul//li/a");
 
     private List<WebElement> manufacturesListItems;
 

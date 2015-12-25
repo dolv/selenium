@@ -6,12 +6,16 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.HasInputDevices;
+import org.openqa.selenium.interactions.Mouse;
+import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import utils.Log4Test;
+
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -29,7 +33,8 @@ public class TestBase {
 
     final public String NEWLINE = System.getProperty("line.separator");
 
-    @BeforeSuite
+    //@BeforeSuite
+    @BeforeTest
     public void setUP()throws IOException{
 
         try {
@@ -63,9 +68,15 @@ public class TestBase {
 
         Log4Test.info("WebDriver instance has been received.");
 
+//        try {
+//            Thread.sleep(5000);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
-    @AfterSuite
+    //@AfterSuite
+    @AfterTest
     public void tearDown(){
 
         try {
@@ -80,11 +91,25 @@ public class TestBase {
 
         Log4Test.info("WebDriver has quitted.");
 
-        try {
-            Thread.sleep(5000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(5000);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+    }
+
+    public void webElementClick(By bySelector){
+
+        WebElement element = driver.findElement(bySelector);
+
+        Locatable hoverItem = (Locatable) element;
+
+        Mouse mouse = ((HasInputDevices) driver).getMouse();
+
+        mouse.mouseMove(hoverItem.getCoordinates());
+
+        element.click();
 
     }
 

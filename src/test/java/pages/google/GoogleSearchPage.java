@@ -26,7 +26,7 @@ public class GoogleSearchPage extends TestBase{
       //  findButton.click();
     }
     public WebElement findURL(){
-        searchLink = driver.findElement(By.xpath(".//*[@id='rso']/div[2]/div[1]/div/h3/a"));
+        searchLink = driver.findElement(By.xpath("//div[@class='rc']/h3/a"));
         return searchLink;
     }
 }
