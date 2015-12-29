@@ -12,8 +12,8 @@ import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import utils.Log4Test;
 
 import java.io.IOException;
@@ -34,7 +34,8 @@ public class TestBase {
     final public String NEWLINE = System.getProperty("line.separator");
 
     //@BeforeSuite
-    @BeforeTest
+    //@BeforeTest
+    @BeforeMethod
     public void setUP()throws IOException{
 
         try {
@@ -76,7 +77,8 @@ public class TestBase {
     }
 
     //@AfterSuite
-    @AfterTest
+    //@AfterTest
+    @AfterMethod
     public void tearDown(){
 
         try {

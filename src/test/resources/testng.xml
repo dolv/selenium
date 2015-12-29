@@ -5,7 +5,7 @@
        verbose="2"
        preserve-order="true" >
 
-    <test name="isPrime" >
+    <test name="isPrime" preserve-order="true">
         <classes>
             <class name="ui_tests.lesson_2.isPrime" />
         </classes>
@@ -18,19 +18,19 @@
         </classes>
     </test>
 
-    <test name="GoogleSearchTest" >
+    <test name="GoogleSearchTest" preserve-order="true">
         <classes>
             <class name="ui_tests.lesson_6.GoogleSearchTest" />
         </classes>
     </test>
 
-    <test name="FinalTask_Test" >
+    <test name="FinalTask_Test" preserve-order="true">
         <classes>
             <class name="ui_tests.final_task.FinalTest" />
         </classes>
     </test>
 
-    <test name="Megazakaz_Test" >
+    <test name="Megazakaz_Test" preserve-order="true">
         <classes>
             <class name="ui_tests.Megazakaz.SearchPageTest" />
         </classes>
